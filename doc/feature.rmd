@@ -1,0 +1,49 @@
+---
+title: "Project 4 feature dtm"
+output: html_notebook
+---
+
+
+```{r extract paper title Akumar}
+paper_title <- c()
+paper_id <- c()
+#paper_coauthor <- c()
+paper_journal <- list()
+for(i in 1:length(data_list[[2]])){
+        paper_id[i] <- data_list[[2]][[i]][[2]]  
+        paper_title[i] <- data_list[[2]][[i]][[4]]
+        #paper_coauthor[i] <- paste(data_list[[2]][[i]][[3]],sep = "",collapse = "")
+        #paper_coauthor[i] <- data_list[[2]][[i]][[3]]
+
+        paper_journal[i] <- data_list[[2]][[i]][[5]]
+}
+
+it_train_paper <- itoken(paper_title, 
+             preprocessor = tolower, 
+             tokenizer = word_tokenizer,
+             ids = paper_id,
+             # turn off progressbar because it won't look nice in rmd
+             progressbar = FALSE)
+vocab_paper <- create_vocabulary(it_train_paper, stopwords = c("a", "an", "the", "in", "on",
+                                                   "at", "of", "above", "under"))
+vectorizer_paper <- vocab_vectorizer(vocab_paper)
+dtm_train_paper <- create_dtm(it_train_paper, vectorizer_paper)
+tfidf_paper <- TfIdf$new()
+dtm_train_tfidf_paper <- fit_transform(dtm_train_paper, tfidf_paper)
+
+# paste(data_list[[2]][[1]][[3]],sep = "",collapse = "")
+
+it_train_journal <- itoken(paper_journal, 
+             preprocessor = tolower, 
+             tokenizer = word_tokenizer,
+             ids = paper_id,
+             # turn off progressbar because it won't look nice in rmd
+             progressbar = FALSE)
+vocab_journal <- create_vocabulary(it_train_journal, stopwords = c("of","for","at","the","a", "an", "in", "under", "on", "above"))
+vectorizer_journal <- vocab_vectorizer(vocab_journal)
+dtm_train_journal <- create_dtm(it_train_journal, vectorizer_journal)
+tfidf_journal <- TfIdf$new()
+dtm_train_tfidf_journal <- fit_transform(dtm_train_journal, tfidf_journal)
+dtm_train_tfidf <- cbind(dtm_train_tfidf_paper, dtm_train_tfidf_journal)
+```
+
