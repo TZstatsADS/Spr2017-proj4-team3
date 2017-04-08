@@ -26,7 +26,6 @@ query.list=paste(substring(query.list, 1, 1),
                  sep=""
                  )
 
-query.list
 
 ```
 
@@ -101,3 +100,45 @@ for(i in 1:length(data.files)){
   
 }
 ```
+
+
+#paper1
+```{r}
+#select a author k
+k=2
+n=length(data_list[[k]])  #2nd name
+coauthor=list()
+authorID=list()
+for(i in 1:n)
+{
+  coauthor[[i]]=data_list[[k]][[i]][[3]]  #coauthor list for cluster
+  authorID[[i]]=data_list[[k]][[i]][[1]]  #authorID list for evaluate
+}
+
+source("../lib/paper1_cluster.R")
+paper1.cluster=cluster1(coauthor)
+
+#generate clusterID
+  len=length(cluster)
+  clusterID=rep(0,n)
+  for(i in 1:n)
+  { for (j in 1:len)
+  {
+    if( !is.na(match(i,cluster[[j]])) ) 
+    {clusterID[i]=j;break}
+  }
+  }
+
+source("../lib/paper1_evaluate.R")
+evaluate1(authorID,clusterID)
+
+
+
+```
+
+
+
+
+
+
+
