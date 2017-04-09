@@ -141,7 +141,7 @@ while (TRUE){ # iterate between E-step & M-step
                 for (Ij in idx_in_cluster_k)
                     if (Ii != Ij && c2_mtx[Ii,Ij]) 
                         s1 = s1 + weighted_dist(X[Ii,], X[Ij,])
-            cur_obj = weighted_dist(xi, Y[k,]) - s1 # minimize the original objective function is equivalent of minimize this objective function (i.e. cur_obj)
+            cur_obj = weighted_dist(xi, Y[k,]) + s1 # minimize the original objective function is equivalent of minimize this objective function (i.e. cur_obj)
             if (cur_obj < min_obj){
                 min_obj = cur_obj
                 new_assign = k
