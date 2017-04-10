@@ -137,7 +137,7 @@ evaluate1(authorID,clusterID)
 ```
 
 ```{r}
-# combile all paper with individual paper into one cluster
+# combile all paper with individual authors into one cluster
 M = list()
 for(i in 1:length(cluster)){
   for(j in 1:length(cluster[[i]])){
