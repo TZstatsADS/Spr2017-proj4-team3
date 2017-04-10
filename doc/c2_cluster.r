@@ -46,3 +46,4 @@ while(max(inter)>=1)
 return(cluster)
 }
 c2_cluster(2)
+
