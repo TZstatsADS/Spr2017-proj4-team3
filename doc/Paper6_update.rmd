@@ -1,0 +1,216 @@
+---
+title: "paper6_update"
+author: "Zijun Nie, zn2146"
+date: "4/10/2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+After finishing: 1. data loading & cleaning 2. feature extraction. Focus on on 'AKumar.txt' first
+
+Preparation 
+
+```{r, tidy = T}
+###
+# control parameters
+K = 14
+step = 0.01
+
+###
+# self-defined functions. For purpose of computation
+norm_a = function(x){
+    s = 0; for (i in 1:M) s = s + x[i]^2 * A[i,i]; return(sqrt(s))
+#   faster than (sqrt(t(x) %*% A %*% x))[1]
+}
+norm_a2 = function(x){
+    s = 0; for (i in 1:M) s = s + x[i]^2 * A[i,i]; return(s)
+}
+norm_a_ij = function(xi, xj){
+    s = 0; for (i in 1:M) s = s + xi[i] * xj[i] * A[i,i]; return(sqrt(s))
+}
+norm_a_ij2 = function(xi, xj){
+    s = 0; for (i in 1:M) s = s + xi[i] * xj[i] * A[i,i]; return(s)
+}
+weighted_dist = function(xi, xj){
+    return (1 - norm_a_ij2(xi, xj) / (norm_a(xi)*norm_a(xj)))
+}
+gradient_v = function(xi, xj){ # used for updating A. Vector-based
+    temp = norm_a(xi)*norm_a(xj)
+    numer= xi*xj*temp - norm_a_ij2(xi, xj) * (xi^2*norm_a2(xi) + xj^2*norm_a2(xj)) / (2*temp)
+    denom = temp^2
+    return(numer / denom)
+}
+```
+
+3. Compute constrains 
+
+```{r}
+###
+# 3. Compute constrains 
+
+X = dtm_train_tfidf_test 
+N = nrow(X) # N: number of instances
+M = ncol(X) # M: number of features 
+
+c2_mtx = matrix(0,nrow = N, ncol = N)
+for (i in 1:(N-1)){
+    for (j in (i+1):N){
+        coau_i = data_list[[2]][[i]][[3]]
+        coau_j = data_list[[2]][[j]][[3]]
+        if (length(intersect(coau_i, coau_j)) > 0)
+            c2_mtx[i, j] = c2_mtx[j, i] = 1
+    }
+}
+```
+
+4. Initialization of y's
+
+```{r}
+###
+# 4. Initialization of y's
+
+A = diag(M)
+intl_groups = 1:N
+# group initially base on c2, and compute lambda
+for (i in 1:(N-1)){
+    if (intl_groups[i] != i) next
+    for (j in i:N) 
+        if (c2_mtx[i, j] == 1) 
+            intl_groups[j] = i
+}
+lambda = length(unique(intl_groups))
+intl_groups_idx = unique(intl_groups)
+# group into lambda clusters first
+Y = matrix(NA, max(K, lambda), M)
+for (i in 1:lambda){
+    y_temp = X[intl_groups == intl_groups_idx[i],]
+    if (!is.vector(y_temp))
+        y_temp = apply(y_temp, 2, sum)
+    Y[i,] = y_temp / norm_a(y_temp)
+}
+# Adjust lambda into K for different cases
+if (lambda < K){
+    centroid_idx = sample(N, K-lambda)
+    for (i in (lambda+1):K){
+        y_temp = X[centroid_idx[i-lambda],]
+        Y[i,] = y_temp / norm_a(y_temp)
+        intl_groups[centroid_idx[i-lambda]] = i # assign xi into a new group, with only itself in the group
+    }
+} else if (lambda >= K){
+    # cluster initial clusters based on y value
+    r = hclust(dist(Y))
+    new_group_idx = cutree(r, K)
+    #intl_groups <- new_group_idx
+    # reassign x's
+   for (i in 1:N){
+        intl_groups[i] = new_group_idx[which(intl_groups[i] == intl_groups_idx)] 
+    }
+    # recompute initial y
+    Y = matrix(NA, K, M)
+    for (i in 1:K){
+        y_temp = X[which(intl_groups == i),]
+        #if (!is.vector(y_temp))
+            y_cent = apply(y_temp, 2, sum)
+        Y[i,] = y_cent / norm_a(y_cent)
+    }
+}
+# after initialization, Y stores the clusters centers, while intl_groups stores the initial clustering for all papers
+```
+
+5 & 6. E-step & M-step
+
+```{r}
+###
+# 5. E-step
+
+x_assign = intl_groups
+x_assign_in_last_e_step = rep(0, length(x_assign))
+
+
+
+
+while (sum(has_change_assignment_in_this_iteration) > 0){ # iterate between E-step & M-step
+    #cat("e-step\n")
+   # ptm = proc.time()
+#    while (TRUE){ # iteratively within E-step to update yh until equilibrium
+    #update_order = sample(N)
+    has_change_assignment_in_this_iteration = rep(FALSE,N)
+    
+         s1 = c() # s1 is the same as the first term in the objective function (in Part 4.1), except that change the not-equality sign into equality sign
+            for (i in 1:N){
+                    s1[i] = 0
+                for (j in 1:N){
+                    if (i != j && c2_mtx[i,j]){ 
+                        s1[i] = s1[i] + weighted_dist(X[i,], X[j,])
+                    }
+                }
+            }
+    #ct = 0
+    for (i in 1:N){
+        #ct = ct + 1; if (ct %% 10 == 0) cat(ct, ' ') # just print out the current status
+        #min_obj = Inf
+            xi = X[i,]
+        for (k in 1:K){ # fix all other assignment and just change the assignment for one paper
+            
+            #idx_in_cluster_k = union(which(x_assign == k), i)
+
+            cur_obj[k] = weighted_dist(xi, Y[k,]) + s1[i] # minimize the original objective function is equivalent of minimize this objective function (i.e. cur_obj)
+        }
+            new_assign <- which.min(cur_obj)
+            if (x_assign[i] != new_assign){
+             x_assign[i] = new_assign
+             has_change_assignment_in_this_iteration[i] = TRUE
+         }
+            
+    }
+    #         if (cur_obj < min_obj){
+    #             min_obj = cur_obj
+    #             new_assign = k
+    #         }
+    #     }
+    #     if (x_assign[i] != new_assign){
+    #         x_assign[i] = new_assign
+    #         has_change_assignment_in_this_iteration = TRUE
+    #     }
+    # }
+         if (sum(has_change_assignment_in_this_iteration) == 0) break
+#     }
+    #if (!has_change_assignment_in_this_iteration) break # if no assignment change from last e-step, the EM algorithm finish
+    #x_assign_in_last_e_step = x_assign
+    #proc.time() - ptm
+   
+     
+    ###
+    # 6. M-step
+    
+    #cat("m-step\n")
+    # update Y
+    for (k in 1:K){
+        y_temp = X[which(x_assign == k), ]
+        if (!is.vector(y_temp))
+            y_temp = apply(y_temp, 2, sum)
+        Y[k,] = y_temp / norm_a(y_temp)
+    }
+    # update A
+    delta = rep(NA, M)
+    calculate_first <- matrix(nrow = N, ncol = M)
+    for(i in 1:N){
+    calculate_first[i,] <- gradient_v(X[i,], Y[x_assign[i],]) 
+    }
+    first_term <- colSums(calculate_first)
+    
+    second_term <- rep(0, M)
+    for (i in 1:N) {
+        for (j in i:N){ 
+            if (c2_mtx[i, j] && i != j) 
+                second_term <-  second_term + gradient_v(X[i,], X[j,])
+        }
+    }
+    
+    delta = first_term + second_term
+    
+    for (m in 1:M)
+        A[m,m] = A[m,m] + step * delta[m]
+}
+```

@@ -41,9 +41,17 @@ it_train_journal <- itoken(paper_journal,
              progressbar = FALSE)
 vocab_journal <- create_vocabulary(it_train_journal, stopwords = c("of","for","at","the","a", "an", "in", "under", "on", "above"))
 vectorizer_journal <- vocab_vectorizer(vocab_journal)
-dtm_train_journal <- create_dtm(it_train_journal, vectorizer_journal)
+dtm_train_journal <- create_dtm(it_train_journal, vectorizer_journal) 
 tfidf_journal <- TfIdf$new()
 dtm_train_tfidf_journal <- fit_transform(dtm_train_journal, tfidf_journal)
 dtm_train_tfidf <- cbind(dtm_train_tfidf_paper, dtm_train_tfidf_journal)
+#dtm_train_tfidf_test <- prcomp(dtm_train_tfidf)
+pca<-prcomp(dtm_train_tfidf,scale=TRUE)
+
+#find cumulative var over 90%
+sum_pca<-summary(pca)
+k<-which(sum_pca$importance[3,]>0.95)[1]
+
+dtm_train_tfidf_test <-pca$x[,1:k]
 ```
 
