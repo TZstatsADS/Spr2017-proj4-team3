@@ -3,7 +3,7 @@ cluster1=function(data,theta=1)
 
   #initialize cluster
 cluster=list()
-for( i in 1:n)
+for( i in 1:length(data))
 {cluster[[i]]=i}
 
  #initialize intersect matrix

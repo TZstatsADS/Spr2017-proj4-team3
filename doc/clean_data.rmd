@@ -105,34 +105,41 @@ for(i in 1:length(data.files)){
 #paper1
 ```{r}
 #select a author k
-k=2
-n=length(data_list[[k]])  #2nd name
-coauthor=list()
-authorID=list()
-for(i in 1:n)
-{
-  coauthor[[i]]=data_list[[k]][[i]][[3]]  #coauthor list for cluster
-  authorID[[i]]=data_list[[k]][[i]][[1]]  #authorID list for evaluate
-}
+paper1<-function(lis){
+  source("../lib/paper1_cluster.R")
+  source("../lib/evaluation_measures.R")
+  table<-list()
+  eval<-list()
+  for(k in 1:length(lis)){
+    n=length(data_list[[k]])  #2nd name
+    coauthor=list()
+    authorID=list()
+  for(i in 1:n)
+  {
+    coauthor[[i]]=data_list[[k]][[i]][[3]]  #coauthor list for cluster
+    authorID[[i]]=data_list[[k]][[i]][[1]]  #authorID list for evaluate
+  }
+  print(coauthor)
 
-source("../lib/paper1_cluster.R")
-paper1.cluster=cluster1(coauthor)
+  cluster=cluster1(coauthor)
 
 #generate clusterID
   len=length(cluster)
   clusterID=rep(0,n)
   for(i in 1:n)
-  { for (j in 1:len)
-  {
-    if( !is.na(match(i,cluster[[j]])) ) 
-    {clusterID[i]=j;break}
+    { for (j in 1:len)
+    {
+      if( !is.na(match(i,cluster[[j]])) ) 
+      {clusterID[i]=j;break}
+    }
+    }
+    table[[k]]<-matching_matrix(unlist(authorID),clusterID)
+    eval[[k]]<-performance_statistics(table[[k]])
   }
-  }
+  return(list(table, eval))
+}
 
-source("../lib/paper1_evaluate.R")
-evaluate1(authorID,clusterID)
-
-
+paper1(data_list)
 
 ```
 
