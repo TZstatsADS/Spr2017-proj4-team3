@@ -56,11 +56,6 @@ deletecluster<-function(cluster){
   M = t(as.matrix(M))
   deletel <- which(!is.na(match(M, x)))
   M = M[,-c(deletel)]
-  
-  G = list()
-  for(i in 1:length(data_list[[k]])){
-    G[i]=data_list[[k]][[i]][1]
-  }
 
   G <- t(as.matrix(G))
   G = G[,-c(deletel)]
