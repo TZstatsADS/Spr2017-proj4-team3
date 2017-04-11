@@ -3,42 +3,16 @@
 ```{r}
 #data_list from clean_data.rmd
 
-#initial co-author 
-n=length(data_list[[2]])  #2nd name
-newlist=list()
-for(i in 1:n)
-{
-  newlist[[i]]=data_list[[2]][[i]][[3]]  #2nd name, change with n
+source("../lib/paper1_func.R")
+table<-matrix(0, nrow = 2, ncol = 2)
+accuracy<-c()
+ratio<-c()
+for(k in 1:length(data_list)){
+  table<-table+paper1_indiv(k)[[1]]
+  accuracy[k]<-paper1_indiv(k)[[2]]$accuracy
+  ratio[k]<-paper1_indiv(k)[[3]]
 }
-
-#initial cluster
-cluster=list()
-for( i in 1:n)
-{cluster[[i]]=i}
-
-
-#initial intersect matrix
-n=length(newlist)
-inter=matrix(0,nrow=n,ncol=n)
-for (i in 1:n)
-  for (j in 1:n)
-{ inter[i,j]=length(intersect(newlist[[i]],newlist[[j]]))
-  }
-diag(inter)=0
-
-#interate
-while(max(inter)>=1)
-{
-u=which(inter==max(inter),arr.ind = T)[1,1]
-v=which(inter==max(inter),arr.ind = T)[1,2]
-cluster[[v]]=union(cluster[[v]],cluster[[u]])
-cluster[[u]]=NULL
-inter[v,]=pmax(inter[u,],inter[v,])
-inter[,v]=inter[v,]
-inter=inter[-u,]
-inter=inter[,-u]
-diag(inter)=0
-}
+eval<-performance_statistics(table)
 ```
 
 

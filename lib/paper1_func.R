@@ -4,12 +4,12 @@ paper1_indiv<-function(k){
   table<-list()
   eval<-list()
   n=length(data_list[[k]])  
-  coauthor <<-list()
-  authorID <<- list()
+  coauthor <-list()
+  authorID <- list()
   for(i in 1:n)
   {
-    coauthor[[i]] <<- data_list[[k]][[i]][[3]]  #coauthor list for cluster
-    authorID[[i]] <<- data_list[[k]][[i]][[1]]  #authorID list for evaluate
+    coauthor[[i]] <- data_list[[k]][[i]][[3]]  #coauthor list for cluster
+    authorID[[i]] <- data_list[[k]][[i]][[1]]  #authorID list for evaluate
   }
   cluster=cluster1(coauthor)
   
@@ -25,5 +25,7 @@ paper1_indiv<-function(k){
   }
   table<-matching_matrix(unlist(authorID),clusterID)
   eval<-performance_statistics(table)
-  return(list(table, eval))
+  ratio<-list()
+  ratio<-n/length(unique(authorID))
+  return(list(table, eval, ratio))
 }
