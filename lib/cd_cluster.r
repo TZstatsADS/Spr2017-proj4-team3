@@ -46,6 +46,3 @@ while(max(inter)>=1)
 return(cluster)
 }
 
-combinecluster(cd_cluster(2))
-deletecluster(cd_cluster(2))
-
