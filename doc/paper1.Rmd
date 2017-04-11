@@ -12,10 +12,12 @@ start.time <- Sys.time()
 table1<-matrix(0, nrow = 2, ncol = 2)
 accuracy1<-c()
 ratio<-c()
+result1<-list()
 for(k in 1:length(data_list)){
-  table1<-table+paper1_indiv(k)[[1]]
-  accuracy1[k]<-paper1_indiv(k)[[2]]$accuracy
-  ratio[k]<-paper1_indiv(k)[[3]]
+  result1<-paper1_indiv(k)
+  table1<-table+result1[[1]]
+  accuracy1[k]<-result1[[2]]$accuracy
+  ratio[k]<-result1[[3]]
 }
 eval1<-performance_statistics(table1)
 plot(ratio, accuracy1, main = "Number of Paper per Author for Each Dataset vs Accuracy")
@@ -27,9 +29,11 @@ table1
 start.time <- Sys.time()
 table2<-matrix(0, nrow = 2, ncol = 2)
 accuracy2<-c()
+result2<-list()
 for(k in 1:length(data_list)){
-  table2<-table2+combinecluster(cd_cluster(k))[[1]]
-  accuracy2[k]<-combinecluster(cd_cluster(k))[[2]]$accuracy
+  result2<-combinecluster(cd_cluster(k))
+  table2<-table2+result2[[1]]
+  accuracy2[k]<-result2[[2]]$accuracy
 }
 eval2<-performance_statistics(table2)
 plot(ratio, accuracy2, main = "Number of Paper per Author for Each Dataset vs Accuracy")
@@ -41,9 +45,11 @@ table2
 start.time <- Sys.time()
 table3<-matrix(0, nrow = 2, ncol = 2)
 accuracy3<-c()
+result3<-list()
 for(k in 1:length(data_list)){
-  table3<-table3+deletecluster(cd_cluster(k))[[1]]
-  accuracy3[k]<-deletecluster(cd_cluster(k))[[2]]$accuracy
+  result3<-deletecluster(cd_cluster(k))
+  table3<-table3+result3[[1]]
+  accuracy3[k]<-result3[[2]]$accuracy
 }
 eval3<-performance_statistics(table3)
 plot(ratio, accuracy3, main = "Number of Paper per Author for Each Dataset vs Accuracy")
