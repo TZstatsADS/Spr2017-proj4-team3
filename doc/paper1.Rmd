@@ -4,15 +4,60 @@
 #data_list from clean_data.rmd
 
 source("../lib/paper1_func.R")
-table<-matrix(0, nrow = 2, ncol = 2)
-accuracy<-c()
+source("../lib/cd_cluster.R")
+source("../lib/cd_cluster_func.R")
+
+
+start.time <- Sys.time()
+table1<-matrix(0, nrow = 2, ncol = 2)
+accuracy1<-c()
 ratio<-c()
 for(k in 1:length(data_list)){
-  table<-table+paper1_indiv(k)[[1]]
-  accuracy[k]<-paper1_indiv(k)[[2]]$accuracy
+  table1<-table+paper1_indiv(k)[[1]]
+  accuracy1[k]<-paper1_indiv(k)[[2]]$accuracy
   ratio[k]<-paper1_indiv(k)[[3]]
 }
-eval<-performance_statistics(table)
+eval1<-performance_statistics(table1)
+plot(ratio, accuracy1, main = "Number of Paper per Author for Each Dataset vs Accuracy")
+end.time <- Sys.time()
+time1 <- end.time - start.time
+table1
+
+
+start.time <- Sys.time()
+table2<-matrix(0, nrow = 2, ncol = 2)
+accuracy2<-c()
+for(k in 1:length(data_list)){
+  table2<-table2+combinecluster(cd_cluster(k))[[1]]
+  accuracy2[k]<-combinecluster(cd_cluster(k))[[2]]$accuracy
+}
+eval2<-performance_statistics(table2)
+plot(ratio, accuracy2, main = "Number of Paper per Author for Each Dataset vs Accuracy")
+end.time <- Sys.time()
+time2 <- end.time - start.time
+table2
+
+
+start.time <- Sys.time()
+table3<-matrix(0, nrow = 2, ncol = 2)
+accuracy3<-c()
+for(k in 1:length(data_list)){
+  table3<-table3+deletecluster(cd_cluster(k))[[1]]
+  accuracy3[k]<-deletecluster(cd_cluster(k))[[2]]$accuracy
+}
+eval3<-performance_statistics(table3)
+plot(ratio, accuracy3, main = "Number of Paper per Author for Each Dataset vs Accuracy")
+end.time <- Sys.time()
+time3 <- end.time - start.time
+table3
+
+compare_df <- data.frame(method=c("Individual Cluster","Combine Cluster","Delete Cluster"),
+                         precision=c(eval1$precision, eval2$precision, eval3$precision),
+                         recall=c(eval1$recall, eval2$recall, eval3$recall),
+                         f1=c(eval1$f1, eval2$f1, eval3$f1),
+                         accuracy=c(eval1$accuracy, eval2$accuracy, eval3$accuracy),
+                         time=c(time1,time2, time3))
+kable(compare_df,caption="Comparision of performance for three clustering methods",digits = 2)
 ```
 
 
