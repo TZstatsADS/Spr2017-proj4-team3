@@ -141,7 +141,7 @@ while (sum(has_change_assignment_in_this_iteration) > 0){ # iterate between E-st
             for (i in 1:N){
                     s1[i] = 0
                 for (j in 1:N){
-                    if (i != j && c2_mtx[i,j]){ 
+                    if (i != j && c2_mtx[i,j] && x_assign[i] != x_assign[j]){ 
                         s1[i] = s1[i] + weighted_dist(X[i,], X[j,])
                     }
                 }
@@ -196,14 +196,15 @@ while (sum(has_change_assignment_in_this_iteration) > 0){ # iterate between E-st
     delta = rep(NA, M)
     calculate_first <- matrix(nrow = N, ncol = M)
     for(i in 1:N){
-    calculate_first[i,] <- gradient_v(X[i,], Y[x_assign[i],]) 
+            temp_x_norm_a <- apply(X[which(x_assign == x_assign[i]),],2,sum)
+    calculate_first[i,] <- gradient_v(X[i,], Y[x_assign[i],] * norm_a(temp_x_norm_a)) 
     }
     first_term <- colSums(calculate_first)
     
     second_term <- rep(0, M)
     for (i in 1:N) {
         for (j in i:N){ 
-            if (c2_mtx[i, j] && i != j) 
+            if (c2_mtx[i, j] && i != j && x_assign[i] != x_assign[j]) 
                 second_term <-  second_term + gradient_v(X[i,], X[j,])
         }
     }
