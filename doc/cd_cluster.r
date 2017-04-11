@@ -45,5 +45,6 @@ while(max(inter)>=1)
 }
 return(cluster)
 }
-c2_cluster(2)
 
+combinecluster(c2_cluster(2))
+deletecluster(c2_cluster(2))
