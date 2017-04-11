@@ -14,6 +14,7 @@ combinecluster<-function(cluster){
   G = list()
   for(i in 1:length(data_list[[k]])){
     G[i]=data_list[[k]][[i]][1]
+
   }
   if(length(M) < length(G)){
     for(i in (length(M)+1:length(G)))
@@ -56,6 +57,11 @@ deletecluster<-function(cluster){
   deletel <- which(!is.na(match(M, x)))
   M = M[,-c(deletel)]
   
+  G = list()
+  for(i in 1:length(data_list[[k]])){
+    G[i]=data_list[[k]][[i]][1]
+  }
+
   G <- t(as.matrix(G))
   G = G[,-c(deletel)]
   
