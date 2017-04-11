@@ -5,6 +5,7 @@ output: html_notebook
 
 
 ```{r extract paper title Akumar}
+library(text2vec)
 paper_title <- c()
 paper_id <- c()
 #paper_coauthor <- c()

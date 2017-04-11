@@ -47,7 +47,7 @@ gradient_v = function(xi, xj){ # used for updating A. Vector-based
 ###
 # 3. Compute constrains 
 
-X = dtm_train_tfidf 
+X = dtm_train_tfidf_test 
 N = nrow(X) # N: number of instances
 M = ncol(X) # M: number of features 
 
@@ -130,17 +130,17 @@ while (TRUE){ # iterate between E-step & M-step
     update_order = sample(N)
     has_change_assignment_in_this_iteration = FALSE
     ct = 0
-    for (i in update_order[1:10]){
+    for (i in update_order){
         ct = ct + 1; if (ct %% 10 == 0) cat(ct, ' ') # just print out the current status
         min_obj = Inf
         for (k in 1:K){ # fix all other assignment and just change the assignment for one paper
             xi = X[i,]
-            idx_in_cluster_k = union(which(x_assign == k), i)
+            idx_not_in_cluster_k = which(x_assign != k)
             s1 = 0 # s1 is the same as the first term in the objective function (in Part 4.1), except that change the not-equality sign into equality sign
-            for (Ii in idx_in_cluster_k)
-                for (Ij in idx_in_cluster_k)
-                    if (Ii != Ij && c2_mtx[Ii,Ij]) 
-                        s1 = s1 + weighted_dist(X[Ii,], X[Ij,])
+                for (Ij in idx_not_in_cluster_k)
+                    if (i != Ij && c2_mtx[i,Ij]) {
+                        s1 = s1 + weighted_dist(X[i,], X[Ij,])
+                    }
             cur_obj = weighted_dist(xi, Y[k,]) + s1 # minimize the original objective function is equivalent of minimize this objective function (i.e. cur_obj)
             if (cur_obj < min_obj){
                 min_obj = cur_obj
@@ -173,8 +173,10 @@ while (TRUE){ # iterate between E-step & M-step
     # update A
     delta = rep(NA, M)
     s1 = s2 = 0
-    for (i in 1:N)
-        s1 = s1 + gradient_v(X[i,], Y[x_assign[i],])
+    for (i in 1:N){
+      temp_x_norm <- apply(X[which(x_assign == x_assign[i]),],2,sum)
+        s1 = s1 + gradient_v(X[i,], temp_x_norm)
+    }
     for (i in 1:(N-1)) 
         for (j in i:N) 
             if (c2_mtx[i, j] == 1 && x_assign[i] != x_assign[j]) 
