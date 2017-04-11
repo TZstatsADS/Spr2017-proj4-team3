@@ -12,8 +12,8 @@ combinecluster<-function(cluster){
   }
   
   G = list()
-  for(i in 1:length(data_list[[2]])){
-    G[i]=data_list[[2]][[i]][1]
+  for(i in 1:length(data_list[[k]])){
+    G[i]=data_list[[k]][[i]][1]
   }
   
   M <- as.data.frame(M)
@@ -43,8 +43,8 @@ deletecluster<-function(cluster){
   M = M[,-c(deletel)]
   
   G = list()
-  for(i in 1:length(data_list[[2]])){
-    G[i]=data_list[[2]][[i]][1]
+  for(i in 1:length(data_list[[k]])){
+    G[i]=data_list[[k]][[i]][1]
   }
   G <- t(as.matrix(G))
   G = G[,-c(deletel)]
