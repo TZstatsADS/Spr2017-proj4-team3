@@ -1,5 +1,5 @@
 #data_list from clean_data.rmd
-c2_cluster <- function(txtNumber){
+cd_cluster <- function(txtNumber){
 #initial co-author 
 n=length(data_list[[txtNumber]])  #2nd name
 
