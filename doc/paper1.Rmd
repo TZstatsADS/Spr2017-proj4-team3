@@ -3,7 +3,7 @@
 
 ```{r, message=FALSE}
 #data_list from clean_data.rmd
-packages.used=c("text2vec", "knitr")
+packages.used=c("text2vec", "knitr", "cluster")
 packages.needed=setdiff(packages.used, 
                         intersect(installed.packages()[,1], 
                                   packages.used))
@@ -12,6 +12,8 @@ if(length(packages.needed)>0){
   install.packages(packages.needed, dependencies = TRUE)
 }
 library(knitr)
+library(cluster)
+library(text2vec)
 source("../lib/paper1_func.R")
 source("../lib/cd_cluster_func.R")
 source("../lib/cd_cluster.R")
@@ -30,10 +32,10 @@ for(k in 1:length(data_list)){
   ratio[k]<-result1[[k]][[3]]
 }
 eval1<-performance_statistics(table1)
-plot(ratio, accuracy1, main = "Number of Paper per Author for Each Dataset vs Accuracy")
+#plot(ratio, accuracy1, main = "Number of Paper per Author for Each Dataset vs Accuracy")
 end.time <- Sys.time()
 time1 <- end.time - start.time
-table1
+#table1
 ```
 ```{r}
 start.time <- Sys.time()
@@ -46,10 +48,10 @@ for(k in 1:length(data_list)){
   accuracy2[k]<-result2[[k]][[2]]$accuracy
 }
 eval2<-performance_statistics(table2)
-plot(ratio, accuracy2, main = "Number of Paper per Author for Each Dataset vs Accuracy")
+#plot(ratio, accuracy2, main = "Number of Paper per Author for Each Dataset vs Accuracy")
 end.time <- Sys.time()
 time2 <- end.time - start.time
-table2
+#table2
 ```
 ```{r}
 start.time <- Sys.time()
@@ -62,10 +64,10 @@ for(k in 1:length(data_list)){
   accuracy3[k]<-result3[[k]][[2]]$accuracy
 }
 eval3<-performance_statistics(table3)
-plot(ratio, accuracy3, main = "Number of Paper per Author for Each Dataset vs Accuracy")
+#plot(ratio, accuracy3, main = "Number of Paper per Author for Each Dataset vs Accuracy")
 end.time <- Sys.time()
 time3 <- end.time - start.time
-table3
+#table3
 ```
 ```{r}
 compare_df <- data.frame(method=c("Individual Cluster","Combine Cluster","Delete Cluster"),

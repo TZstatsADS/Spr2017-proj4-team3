@@ -26,7 +26,7 @@ combinecluster<-function(cluster){
   
   
   result_matrix <- matching_matrix(G, M)
-  print(result_matrix)
+#  print(result_matrix)
   performace <-performance_statistics(result_matrix)
   return(list(result_matrix, performace))
 }
@@ -64,7 +64,7 @@ deletecluster<-function(cluster){
   G <- as.data.frame(G)
   
   result_matrix <- matching_matrix(G, M)
-  print(result_matrix)
+#  print(result_matrix)
   performance <- performance_statistics(result_matrix) 
   return(list(result_matrix, performance))
 }
