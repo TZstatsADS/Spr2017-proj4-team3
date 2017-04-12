@@ -4,14 +4,14 @@ paper1_indiv<-function(k){
   table<-list()
   eval<-list()
   n=length(data_list[[k]])  
-  coauthor <-list()
+  coauthor <<-list()
   authorID <- list()
   for(i in 1:n)
   {
-    coauthor[[i]] <- data_list[[k]][[i]][[3]]  #coauthor list for cluster
+    coauthor[[i]] <<- data_list[[k]][[i]][[3]]  #coauthor list for cluster
     authorID[[i]] <- data_list[[k]][[i]][[1]]  #authorID list for evaluate
   }
-  cluster=cluster1(coauthor)
+  cluster<-cluster1(coauthor)
   
   #generate clusterID
   len=length(cluster)
