@@ -1,5 +1,6 @@
 
 
+
 ```{r, message=FALSE}
 #data_list from clean_data.rmd
 packages.used=c("text2vec", "knitr")
@@ -23,10 +24,10 @@ accuracy1<-c()
 ratio<-c()
 result1<-list()
 for(k in 1:length(data_list)){
-  result1<-paper1_indiv(k)
-  table1<-table1+result1[[1]]
-  accuracy1[k]<-result1[[2]]$accuracy
-  ratio[k]<-result1[[3]]
+  result1[[k]]<-paper1_indiv(k)
+  table1<-table1+result1[[k]][[1]]
+  accuracy1[k]<-result1[[k]][[2]]$accuracy
+  ratio[k]<-result1[[k]][[3]]
 }
 eval1<-performance_statistics(table1)
 plot(ratio, accuracy1, main = "Number of Paper per Author for Each Dataset vs Accuracy")
@@ -40,9 +41,9 @@ table2<-matrix(0, nrow = 2, ncol = 2)
 accuracy2<-c()
 result2<-list()
 for(k in 1:length(data_list)){
-  result2<-combinecluster(cd_cluster(k))
-  table2<-table2+result2[[1]]
-  accuracy2[k]<-result2[[2]]$accuracy
+  result2[[k]]<-combinecluster(cd_cluster(k))
+  table2<-table2+result2[[k]][[1]]
+  accuracy2[k]<-result2[[k]][[2]]$accuracy
 }
 eval2<-performance_statistics(table2)
 plot(ratio, accuracy2, main = "Number of Paper per Author for Each Dataset vs Accuracy")
@@ -56,9 +57,9 @@ table3<-matrix(0, nrow = 2, ncol = 2)
 accuracy3<-c()
 result3<-list()
 for(k in 1:length(data_list)){
-  result3<-deletecluster(cd_cluster(k))
-  table3<-table3+result3[[1]]
-  accuracy3[k]<-result3[[2]]$accuracy
+  result3[[k]]<-deletecluster(cd_cluster(k))
+  table3<-table3+result3[[k]][[1]]
+  accuracy3[k]<-result3[[k]][[2]]$accuracy
 }
 eval3<-performance_statistics(table3)
 plot(ratio, accuracy3, main = "Number of Paper per Author for Each Dataset vs Accuracy")
@@ -78,5 +79,5 @@ result_table
 ```
 
 ```{r}
-save(eval1, eval2, eval3, ratio, accuracy1, accuracy2, accuracy3, time1, time2, time3, result_table, table1, table2, table3, file = "../output/paper1.RData")
+save(result1, result2, result3, eval1, eval2, eval3, ratio, accuracy1, accuracy2, accuracy3, time1, time2, time3, result_table, table1, table2, table3, file = "../output/paper1.RData")
 ```
