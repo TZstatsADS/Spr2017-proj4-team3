@@ -120,7 +120,7 @@ print(A)
 We use four features(precision, recall, fi, accuracy) of each dataset for feeding the kmeans algorithm.
 according to the whith "Within groups sum of squares", we choose to have four clusters.
 
-According to the cluster result we calculate the mean accuracy and ratio of each cluster, we found that datasets with higher ratio tend to have higher accuracy which means the algorithm in paper1 is sensitive to the ratio of dataset and improvement needed.
+According to the cluster result we calculate the mean accuracy and ratio(The average number of paper for each author) of each cluster, we found that datasets with higher ratio tend to have higher accuracy which means the algorithm in paper1 is sensitive to the ratio of dataset and improvement needed.
 ```{r}
 wss <- (nrow(A)-1)*sum(apply(A,2,var))
 for (i in 2:5){
