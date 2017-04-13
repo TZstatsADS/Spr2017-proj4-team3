@@ -18,7 +18,15 @@ source("../lib/paper1_func.R")
 source("../lib/cd_cluster_func.R")
 source("../lib/cd_cluster.R")
 ```
+# prediction and evaluation
+For algorithm in paper 1, we set threshold to 1 which means for the result of the algorithm any paper in the different dataset will not have the same coauthor.
 
+Due to the imperfect data, we applied three method trying to improve the result of the clustering algorithm.
+1 Leave papers only with the main author or with one unique coauthor as individual cluster
+2 Combine papers methioned above to one cluster
+3 Delete those papers 
+
+The result are shown as the table below 
 ```{r}
 start.time <- Sys.time()
 table1<-matrix(0, nrow = 2, ncol = 2)
@@ -26,10 +34,21 @@ accuracy1<-c()
 ratio<-c()
 result1<-list()
 for(k in 1:length(data_list)){
+
   result1[[k]]<-paper1_indiv(k)
   table1<-table1+result1[[k]][[1]]
   accuracy1[k]<-result1[[k]][[2]]$accuracy
   ratio[k]<-result1[[k]][[3]]
+
+  result1<-paper1_indiv(k)
+
+  table1<-table1+result1[[1]]
+
+  table1<-table+result1[[1]]
+
+  accuracy1[k]<-result1[[2]]$accuracy
+  ratio[k]<-result1[[3]]
+
 }
 eval1<-performance_statistics(table1)
 #plot(ratio, accuracy1, main = "Number of Paper per Author for Each Dataset vs Accuracy")
@@ -83,3 +102,52 @@ result_table
 ```{r}
 save(result1, result2, result3, eval1, eval2, eval3, ratio, accuracy1, accuracy2, accuracy3, time1, time2, time3, result_table, table1, table2, table3, file = "../output/paper1.RData")
 ```
+
+# change result matrix of each dataset to 14*4 dataframe which can be fed to the "cluster" package 
+```{r}
+load("../output/paper1.RData")
+A <- unlist(result1[[1]][2])
+for(i in 2:14){
+  t <- unlist(result1[[i]][2])
+  t <- as.data.frame(t)
+  A <- cbind(A, t)
+}
+colnames(A) <- c(1:14)
+A <- t(A)
+print(A)
+```
+# cluster 
+We use four features(precision, recall, fi, accuracy) of each dataset for feeding the kmeans algorithm.
+according to the whith "Within groups sum of squares", we choose to have four clusters.
+
+According to the cluster result we calculate the mean accuracy and ratio of each cluster, we found that datasets with higher ratio tend to have higher accuracy which means the algorithm in paper1 is sensitive to the ratio of dataset and improvement needed.
+```{r}
+wss <- (nrow(A)-1)*sum(apply(A,2,var))
+for (i in 2:5){
+  wss[i] <- sum(kmeans(A, centers=i)$withinss)
+}
+plot(1:5, wss, type="b", xlab="Number of Clusters",
+     ylab="Within groups sum of squares")
+
+set.seed(1000)
+clus <- kmeans(A, 4)
+print(clus$cluster)
+
+clusplot(A, clus$cluster, color=TRUE, shade=TRUE, 
+         labels=2, lines=0)
+
+c1_accuracy <- mean(accuracy1[3], accuracy1[6], accuracy1[11])
+c2_accuracy <- mean(accuracy1[1], accuracy1[4], accuracy1[7], accuracy1[12])
+c3_accuracy <- mean(accuracy1[2], accuracy1[9])
+c4_accuracy <- mean(accuracy1[5], accuracy1[8], accuracy1[13], accuracy1[14])
+
+c1_ratio <- mean(ratio[3], ratio[6], ratio[11])
+c2_ratio <- mean(ratio[1], ratio[4], ratio[7], ratio[12])
+c3_ratio  <- mean(ratio[2], ratio[9])
+c4_ratio  <- mean(ratio[5], ratio[8], ratio[13], ratio[14])
+
+cluser_accuracy <- c(c1_accuracy, c2_accuracy, c3_accuracy, c4_accuracy)
+cluster_ratio <- c(c1_ratio, c2_ratio, c3_ratio, c4_ratio)
+plot(cluster_ratio, cluser_accuracy)
+```
+

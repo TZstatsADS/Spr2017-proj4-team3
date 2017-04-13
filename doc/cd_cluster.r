@@ -46,7 +46,6 @@ while(max(inter)>=1)
 return(cluster)
 }
 
-<<<<<<< Updated upstream
+combinecluster(cd_cluster(2))
+deletecluster(cd_cluster(2))
 
-=======
->>>>>>> Stashed changes
