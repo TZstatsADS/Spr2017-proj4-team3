@@ -1,0 +1,208 @@
+---
+title: "Paper6_training"
+author: "Zijun Nie ; zn2146"
+date: "April 12, 2017"
+output: html_document
+---
+
+```{r}
+source("../lib/p6_function.R")
+source("../lib/evaluation_measures.R")
+##########
+c2_mtx1 <- p6_compute_c2(1)
+X1 <- feature(1)
+K1 <- length(unique(paper6_authorID(1)))
+intl_groups1 <- p6_initialization(c2_mtx=c2_mtx1, X=X1, K=K1)$intl_groups
+Y1 <- p6_initialization(c2_mtx=c2_mtx1, X=X1, K=K1)$Y
+result1 <- p6_train_EM(c2_mtx=c2_mtx1, intl_groups=intl_groups1, X=X1, Y=Y1, K=K1)
+##########
+c2_mtx2 <- p6_compute_c2(2)
+X2 <- feature(2)
+K2 <- length(unique(paper6_authorID(2)))
+intl_groups2 <- p6_initialization(c2_mtx=c2_mtx2, X=X2, K=K2)$intl_groups
+Y2 <- p6_initialization(c2_mtx=c2_mtx2, X=X2, K=K2)$Y
+result2 <- p6_train_EM(c2_mtx=c2_mtx2, intl_groups=intl_groups2, X=X2, Y=Y2, K=K2)
+##########
+c2_mtx3 <- p6_compute_c2(3)
+X3 <- feature(3)
+K3 <- length(unique(paper6_authorID(3)))
+intl_groups3 <- p6_initialization(c2_mtx=c2_mtx3, X=X3, K=K3)$intl_groups
+Y3 <- p6_initialization(c2_mtx=c2_mtx3, X=X3, K=K3)$Y
+result3 <- p6_train_EM(c2_mtx=c2_mtx3, intl_groups=intl_groups3, X=X3, Y=Y3, K=K3)
+##########
+c2_mtx4 <- p6_compute_c2(4)
+X4 <- feature(4)
+K4 <- length(unique(paper6_authorID(4)))
+intl_groups4 <- p6_initialization(c2_mtx=c2_mtx4, X=X4, K=K4)$intl_groups
+Y4 <- p6_initialization(c2_mtx=c2_mtx4, X=X4, K=K4)$Y
+result4 <- p6_train_EM(c2_mtx=c2_mtx4, intl_groups=intl_groups4, X=X4, Y=Y4, K=K4)
+##########
+c2_mtx5 <- p6_compute_c2(5)
+X5 <- feature(5)
+K5 <- length(unique(paper6_authorID(5)))
+intl_groups5 <- p6_initialization(c2_mtx=c2_mtx5, X=X5, K=K5)$intl_groups
+Y5 <- p6_initialization(c2_mtx=c2_mtx5, X=X5, K=K5)$Y
+result5 <- p6_train_EM(c2_mtx=c2_mtx5, intl_groups=intl_groups5, X=X5, Y=Y5, K=K5)
+##########
+c2_mtx6 <- p6_compute_c2(6)
+X6 <- feature(6)
+K6 <- length(unique(paper6_authorID(6)))
+intl_groups6 <- p6_initialization(c2_mtx=c2_mtx6, X=X6, K=K6)$intl_groups
+Y6 <- p6_initialization(c2_mtx=c2_mtx6, X=X6, K=K6)$Y
+result6 <- p6_train_EM(c2_mtx=c2_mtx6, intl_groups=intl_groups6, X=X6, Y=Y6, K=K6)
+##########
+c2_mtx7 <- p6_compute_c2(7)
+X7 <- feature(7)
+K7 <- length(unique(paper6_authorID(7)))
+intl_groups7 <- p6_initialization(c2_mtx=c2_mtx7, X=X7, K=K7)$intl_groups
+Y7 <- p6_initialization(c2_mtx=c2_mtx7, X=X7, K=K7)$Y
+result7 <- p6_train_EM(c2_mtx=c2_mtx7, intl_groups=intl_groups7, X=X7, Y=Y7, K=K7)
+# ##########
+c2_mtx8 <- p6_compute_c2(8)
+X8 <- feature(8)
+K8 <- length(unique(paper6_authorID(8)))
+intl_groups8 <- p6_initialization(c2_mtx=c2_mtx8, X=X8, K=K8)$intl_groups
+Y8 <- p6_initialization(c2_mtx=c2_mtx8, X=X8, K=K8)$Y
+result8 <- p6_train_EM(c2_mtx=c2_mtx8, intl_groups=intl_groups8, X=X8, Y=Y8, K=K8)
+##########
+c2_mtx9 <- p6_compute_c2(9)
+X9 <- feature(9)
+K9 <- length(unique(paper6_authorID(9)))
+intl_groups9 <- p6_initialization(c2_mtx=c2_mtx9, X=X9, K=K9)$intl_groups
+Y9 <- p6_initialization(c2_mtx=c2_mtx9, X=X9, K=K9)$Y
+result9 <- p6_train_EM(c2_mtx=c2_mtx9, intl_groups=intl_groups9, X=X9, Y=Y9, K=K9)
+##########
+c2_mtx10 <- p6_compute_c2(10)
+X10 <- feature(10)
+K10 <- length(unique(paper6_authorID(10)))
+intl_groups10 <- p6_initialization(c2_mtx=c2_mtx10, X=X10, K=K10)$intl_groups
+Y10 <- p6_initialization(c2_mtx=c2_mtx10, X=X10, K=K10)$Y
+result10 <- p6_train_EM(c2_mtx=c2_mtx10, intl_groups=intl_groups10, X=X10, Y=Y10, K=K10)
+##########
+c2_mtx11 <- p6_compute_c2(11)
+X11 <- feature(11)
+K11 <- length(unique(paper6_authorID(11)))
+intl_groups11 <- p6_initialization(c2_mtx=c2_mtx11, X=X11, K=K11)$intl_groups
+Y11 <- p6_initialization(c2_mtx=c2_mtx11, X=X11, K=K11)$Y
+result11 <- p6_train_EM(c2_mtx=c2_mtx11, intl_groups=intl_groups11, X=X11, Y=Y11, K=K11)
+##########
+c2_mtx12 <- p6_compute_c2(12)
+X12 <- feature(12)
+K12 <- length(unique(paper6_authorID(12)))
+intl_groups12 <- p6_initialization(c2_mtx=c2_mtx12, X=X12, K=K12)$intl_groups
+Y12 <- p6_initialization(c2_mtx=c2_mtx12, X=X12, K=K12)$Y
+result12 <- p6_train_EM(c2_mtx=c2_mtx12, intl_groups=intl_groups12, X=X12, Y=Y12, K=K12)
+##########
+c2_mtx13 <- p6_compute_c2(13)
+X13 <- feature(13)
+K13 <- length(unique(paper6_authorID(13)))
+intl_groups13 <- p6_initialization(c2_mtx=c2_mtx13, X=X13, K=K13)$intl_groups
+Y13 <- p6_initialization(c2_mtx=c2_mtx13, X=X13, K=K13)$Y
+result13 <- p6_train_EM(c2_mtx=c2_mtx13, intl_groups=intl_groups13, X=X13, Y=Y13, K=K13)
+# ##########
+c2_mtx14 <- p6_compute_c2(14)
+X14 <- feature(14)
+K14 <- length(unique(paper6_authorID(14)))
+intl_groups14 <- p6_initialization(c2_mtx=c2_mtx14, X=X14, K=K14)$intl_groups
+Y14 <- p6_initialization(c2_mtx=c2_mtx14, X=X14, K=K14)$Y
+result14 <- p6_train_EM(c2_mtx=c2_mtx14, intl_groups=intl_groups14, X=X14, Y=Y14, K=K14)
+# ##########
+mm1 <- matching_matrix(paper6_authorID(1), result1$x_assign)
+mm2 <- matching_matrix(paper6_authorID(2),result2$x_assign)
+mm3 <- matching_matrix(paper6_authorID(3),result3$x_assign)
+mm4 <- matching_matrix(paper6_authorID(4),result4$x_assign)
+mm5 <- matching_matrix(paper6_authorID(5),result5$x_assign)
+mm6 <- matching_matrix(paper6_authorID(6),result6$x_assign)
+mm7 <- matching_matrix(paper6_authorID(7),result7$x_assign)
+mm8 <- matching_matrix(paper6_authorID(8),result8$x_assign)
+mm9 <- matching_matrix(paper6_authorID(9),result9$x_assign)
+mm10 <- matching_matrix(paper6_authorID(10),result10$x_assign)
+mm11 <- matching_matrix(paper6_authorID(11),result11$x_assign)
+mm12 <- matching_matrix(paper6_authorID(12),result12$x_assign)
+mm13 <- matching_matrix(paper6_authorID(13),result13$x_assign)
+mm14 <- matching_matrix(paper6_authorID(14),result14$x_assign)
+overall_table <- mm1 +mm2+mm3+mm4+mm6+mm7+mm9+mm10+mm11+mm12
+performance <- performance_statistics(overall_table)
+overall_performance <- data.frame(Precision=performance$precision,
+                                  Recall=performance$recall,
+                                  f1=performance$f1,
+                                  Accuracy=performance$accuracy)
+
+save(result1, result2, result3,result4,result6,result7,result9,result10,result11,result12,overall_table, overall_performance, file = "../output/paper6.RData")
+
+p1 <- performance_statistics(matching_matrix(paper6_authorID(1),result1$x_assign))$precision
+p2 <- performance_statistics(matching_matrix(paper6_authorID(2),result2$x_assign))$precision
+p3 <- performance_statistics(matching_matrix(paper6_authorID(3),result3$x_assign))$precision
+p4 <- performance_statistics(matching_matrix(paper6_authorID(4),result4$x_assign))$precision
+p5 <- performance_statistics(matching_matrix(paper6_authorID(5),result5$x_assign))$precision
+p6 <- performance_statistics(matching_matrix(paper6_authorID(6),result6$x_assign))$precision
+p7 <- performance_statistics(matching_matrix(paper6_authorID(7),result7$x_assign))$precision
+p8 <- performance_statistics(matching_matrix(paper6_authorID(8),result8$x_assign))$precision
+p9 <- performance_statistics(matching_matrix(paper6_authorID(9),result9$x_assign))$precision
+p10 <- performance_statistics(matching_matrix(paper6_authorID(10),result10$x_assign))$precision
+p11 <- performance_statistics(matching_matrix(paper6_authorID(11),result11$x_assign))$precision
+p12 <- performance_statistics(matching_matrix(paper6_authorID(12),result12$x_assign))$precision
+p13 <- performance_statistics(matching_matrix(paper6_authorID(13),result13$x_assign))$precision
+p14 <- performance_statistics(matching_matrix(paper6_authorID(14),result14$x_assign))$precision
+
+
+r1 <- performance_statistics(matching_matrix(paper6_authorID(1),result1$x_assign))$recall
+r2 <- performance_statistics(matching_matrix(paper6_authorID(2),result2$x_assign))$recall
+r3 <- performance_statistics(matching_matrix(paper6_authorID(3),result3$x_assign))$recall
+r4 <- performance_statistics(matching_matrix(paper6_authorID(4),result4$x_assign))$recall
+r5 <- performance_statistics(matching_matrix(paper6_authorID(5),result5$x_assign))$recall
+r6 <- performance_statistics(matching_matrix(paper6_authorID(6),result6$x_assign))$recall
+r7 <- performance_statistics(matching_matrix(paper6_authorID(7),result7$x_assign))$recall
+r8 <- performance_statistics(matching_matrix(paper6_authorID(8),result8$x_assign))$recall
+r9 <- performance_statistics(matching_matrix(paper6_authorID(9),result9$x_assign))$recall
+r10 <- performance_statistics(matching_matrix(paper6_authorID(10),result10$x_assign))$recall
+r11 <- performance_statistics(matching_matrix(paper6_authorID(11),result11$x_assign))$recall
+r12 <- performance_statistics(matching_matrix(paper6_authorID(12),result12$x_assign))$recall
+r13 <- performance_statistics(matching_matrix(paper6_authorID(13),result13$x_assign))$recall
+r14 <- performance_statistics(matching_matrix(paper6_authorID(14),result14$x_assign))$recall
+
+
+f1 <- performance_statistics(matching_matrix(paper6_authorID(1),result1$x_assign))$f1
+f2 <- performance_statistics(matching_matrix(paper6_authorID(2),result2$x_assign))$f1
+f3 <- performance_statistics(matching_matrix(paper6_authorID(3),result3$x_assign))$f1
+f4 <- performance_statistics(matching_matrix(paper6_authorID(4),result4$x_assign))$f1
+f5 <- performance_statistics(matching_matrix(paper6_authorID(5),result5$x_assign))$f1
+f6 <- performance_statistics(matching_matrix(paper6_authorID(6),result6$x_assign))$f1
+f7 <- performance_statistics(matching_matrix(paper6_authorID(7),result7$x_assign))$f1
+f8 <- performance_statistics(matching_matrix(paper6_authorID(8),result8$x_assign))$f1
+f9 <- performance_statistics(matching_matrix(paper6_authorID(9),result9$x_assign))$f1
+f10 <- performance_statistics(matching_matrix(paper6_authorID(10),result10$x_assign))$f1
+f11 <- performance_statistics(matching_matrix(paper6_authorID(11),result11$x_assign))$f1
+f12 <- performance_statistics(matching_matrix(paper6_authorID(12),result12$x_assign))$f1
+f13 <- performance_statistics(matching_matrix(paper6_authorID(13),result13$x_assign))$f1
+f14 <- performance_statistics(matching_matrix(paper6_authorID(14),result14$x_assign))$f1
+
+
+a1 <- performance_statistics(matching_matrix(paper6_authorID(1),result1$x_assign))$accuracy
+a2 <- performance_statistics(matching_matrix(paper6_authorID(2),result2$x_assign))$accuracy
+a3 <- performance_statistics(matching_matrix(paper6_authorID(3),result3$x_assign))$accuracy
+a4 <- performance_statistics(matching_matrix(paper6_authorID(4),result4$x_assign))$accuracy
+a5 <- performance_statistics(matching_matrix(paper6_authorID(5),result5$x_assign))$accuracy
+a6 <- performance_statistics(matching_matrix(paper6_authorID(6),result6$x_assign))$accuracy
+a7 <- performance_statistics(matching_matrix(paper6_authorID(7),result7$x_assign))$accuracy
+a8 <- performance_statistics(matching_matrix(paper6_authorID(8),result8$x_assign))$accuracy
+a9 <- performance_statistics(matching_matrix(paper6_authorID(9),result9$x_assign))$accuracy
+a10 <- performance_statistics(matching_matrix(paper6_authorID(10),result10$x_assign))$accuracy
+a11 <- performance_statistics(matching_matrix(paper6_authorID(11),result11$x_assign))$accuracy
+a12 <- performance_statistics(matching_matrix(paper6_authorID(12),result12$x_assign))$accuracy
+a13 <- performance_statistics(matching_matrix(paper6_authorID(13),result13$x_assign))$accuracy
+a14 <- performance_statistics(matching_matrix(paper6_authorID(14),result14$x_assign))$accuracy
+
+
+future=paste("p6_precision",".jpg") 
+jpeg(file=future)
+plot(seq(1,10),c(p1,p2,p3,p4,p6,p7,p9,p10,p11,p12),col="red",pch=22,xaxt="n",ylim=c(0,1),lwd=2,xlab="Dataset",ylab="Performance",main="Paper6 Performance",font.main=2,asp=0,cex=1.2,type="b",lty=1)
+lines(seq(1,10),c(r1,r2,r3,r4,r6,r7,r9,r10,r11,r12),col="green",pch=20,xaxt="n",ylim=c(0,1),lwd=2,font.main=2,asp=0,cex=1.2,type="b",lty=2)
+lines(seq(1,10),c(f1,f2,f3,f4,f6,f7,f9,f10,f11,f12),col="blue",pch=18,xaxt="n",ylim=c(0,1),lwd=2,font.main=2,asp=0,cex=1.2,type="b",lty=3)
+lines(seq(1,10),c(a1,a2,a3,a4,a6,a7,a9,a10,a11,a12),col="black",pch=16,xaxt="n",ylim=c(0,1),lwd=2,font.main=2,asp=0,cex=1.2,type="b",lty=4)
+legend("bottomright",legend=c("Precision","Recall","f1","Accuracy"),pch=c(22,20,18,16),col=c("red","green","blue"),lwd=2,lty=c(1,2,3,4))
+dev.off()
+```
+
+
+

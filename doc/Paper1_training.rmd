@@ -100,7 +100,7 @@ result_table
 ```
 
 ```{r}
-save(result1, result2, result3, eval1, eval2, eval3, ratio, accuracy1, accuracy2, accuracy3, time1, time2, time3, result_table, table1, table2, table3, file = "../output/paper1.RData")
+save(eval1, eval2, eval3, ratio, accuracy1, accuracy2, accuracy3, time1, time2, time3, result_table, table1, table2, table3, file = "../output/paper1.RData")
 ```
 
 # change result matrix of each dataset to 14*4 dataframe which can be fed to the "cluster" package 

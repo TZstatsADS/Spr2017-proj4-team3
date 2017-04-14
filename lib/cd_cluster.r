@@ -46,7 +46,4 @@ while(max(inter)>=1)
 return(cluster)
 }
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
