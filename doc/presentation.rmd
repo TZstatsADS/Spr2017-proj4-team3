@@ -10,7 +10,7 @@ output:
 ---
 ## **Project Summary**
 
-* In this project, we implemented the algorithms from **paper1** and **paper6 (with C2 constraint)** to deal with name disambiguation problem. Both of the papers use unsupervised learning algorithm to cluster publications from each of the authors.
+* In this project, we implemented the algorithms from **paper1** and **paper6 (with C2 constraint)** to deal with name disambiguation problem. 
 
 
 
@@ -38,8 +38,11 @@ For the initialization, we think of each publications as a single cluster. Then 
 we use matching matrix to evaluate our results (following the function in TA's code)
 
 Due to the imperfect data, we applied three methods trying to improve the result of the clustering algorithm.
+
 1 Leave papers only with the main author or with one unique coauthor as individual cluster
+
 2 Combine papers methioned above to one cluster
+
 3 Delete those papers 
 
 **Overall Result**:
@@ -58,11 +61,11 @@ This paper uses a constraint-based probabilistic framework and EM algorithm to d
 ### Experiment Design
 * **Features**: 
 
-We use "Paper Name" and "Journal Title" to extract features for each publication. More specifically, we use TF-IDF to construct a dtm matrix as our feature matrix.   
+We use "Paper Name" and "Journal Title" to extract features for each publication. More specifically, we use TF-IDF to construct a dtm matrix as our feature matrix and we use PCA to reduce dimension.   
 
 * **Tuned parameters**:
 
-step size = 0.01
+step size = 0.01, w2 =1
 
 * **Algorithm**:
 
